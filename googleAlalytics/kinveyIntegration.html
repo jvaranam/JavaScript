@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Google Analytics Demo App</title>
+</head>
+<script src="https://da189i1jfloii.cloudfront.net/js/kinvey-html5-sdk-3.5.1.min.js"></script>
+<script type="text/javascript">
+
+	function init(){
+		Kinvey.initialize({
+		  appKey: '{appKey}',
+		  appSecret: '{appSecret}',
+		  apiHostname: '{api hostname if any}'
+		}).then(function(activeUser) {
+		  var promise = Kinvey.User.login('{username}', '{password}').then(function onSuccess(user) {
+		  	console.log(user)
+			}).catch(function onError(error) {
+			  console.log(error)
+			});
+		}).catch(function(error) {
+		  console.log(error)
+		});
+	}
+    function loadJSON(_cid, _eCategory, _eAction, _eLabel, _eVal) {
+        Kinvey.CustomEndpoint.execute('googleAnalyticsTracking', {
+		  _cid: _cid,
+		  _eCategory: _eCategory,
+		  _eAction: _eAction,
+		  _eLabel: _eLabel,
+		  _eVal: _eVal
+		})
+		.then(function(response) {
+		    console.log(response);
+		})
+		.catch(function(error) {
+		    console.log(error);
+		});
+    }
+</script>
+
+<body onload="init()">
+  <a href="http://devcenter.kinvey.com/html5/guides/getting-started"> Kinvey doc </a>
+  <a href="http://devcenter.kinvey.com/html5/guides/users#login"> Kinvey user login </a>
+  <a href="https://ga-dev-tools.appspot.com/hit-builder/">analytics doc / builders </a>
+  
+	<button onclick='loadJSON(0,"eventCategory_try", "eventAction_try", "eventLabel_try", 1000)'>Button Try</button>
+
+	<button onclick='loadJSON(1,"eventCategory_11", "eventAction_1", "eventLabel_1", 100)'>Button 1</button>
+	<button onclick='loadJSON(2,"eventCategory_12", "eventAction_2", "eventLabel_2", 200)'>Button 2</button>
+	<button onclick='loadJSON(3,"eventCategory_13", "eventAction_3", "eventLabel_3", 300)'>Button 3</button>
+	<button onclick='loadJSON(4,"eventCategory_14", "eventAction_4", "eventLabel_4", 400)'>Button 4</button>
+	<button onclick='loadJSON(5,"eventCategory_15", "eventAction_5", "eventLabel_5", 500)'>Button 5</button>
+</body>
+
+</html>
