@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Google Analytics Demo App</title>
+</head>
+<script type="text/javascript">
+    function loadJSON(_cid, _eCategory, _eAction, _eLabel, _eVal) {
+        var tid = "UA-xxxxxxxx-X";/* need to place actual value */
+        var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+        xobj.open('POST', 'https://www.google-analytics.com/r/collect?v=1&t=event&tid='+tid+'&cid=12345'+_cid+'&ec='+_eCategory+'&ea='+_eAction+'&el='+_eLabel+'&ev='+_eVal, true);
+        xobj.onreadystatechange = function() {
+            if (xobj.readyState == 4 && xobj.status == "200") {
+                console.log(_eCategory+' success');
+            }
+        };
+        xobj.send(null);
+    }
+</script>
+
+<body onload="init()">
+  <a href="https://ga-dev-tools.appspot.com/hit-builder/">analytics doc / builders </a>
+
+
+	<button onclick='loadJSON(0,"eventCategory_try", "eventAction_try", "eventLabel_try", 1000)'>Button Try</button>
+
+	<button onclick='loadJSON(1,"eventCategory_11", "eventAction_1", "eventLabel_1", 100)'>Button 1</button>
+	<button onclick='loadJSON(2,"eventCategory_12", "eventAction_2", "eventLabel_2", 200)'>Button 2</button>
+	<button onclick='loadJSON(3,"eventCategory_13", "eventAction_3", "eventLabel_3", 300)'>Button 3</button>
+	<button onclick='loadJSON(4,"eventCategory_14", "eventAction_4", "eventLabel_4", 400)'>Button 4</button>
+	<button onclick='loadJSON(5,"eventCategory_15", "eventAction_5", "eventLabel_5", 500)'>Button 5</button>
+</body>
+
+</html>
+
